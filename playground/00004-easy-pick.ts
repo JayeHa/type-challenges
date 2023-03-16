@@ -3,13 +3,15 @@
 /*
   4 - Pick
   -------
-  by Anthony Fu (@antfu) #쉬움 #union #built-in
+  by Anthony Fu (@antfu) #easy #union #built-in
 
-  ### 질문
+  ### Question
 
-  `T`에서 `K` 프로퍼티만 선택해 새로운 오브젝트 타입을 만드는 내장 제네릭 `Pick<T, K>`을 이를 사용하지 않고 구현하세요.
+  Implement the built-in `Pick<T, K>` generic without using it.
 
-  예시:
+  Constructs a type by picking the set of properties `K` from `T`
+
+  For example:
 
   ```ts
   interface Todo {
@@ -26,31 +28,14 @@
   }
   ```
 
-  > GitHub에서 보기: https://tsch.js.org/4/ko
+  > View on GitHub: https://tsch.js.org/4
 */
 
-/* _____________ 여기에 코드 입력 _____________ */
+/* _____________ Your Code Here _____________ */
 
-// implement
-type MyPick<T, K extends keyof T> = {
-  [P in K]: T[K]
-}
+type MyPick<T, K> = any
 
-// example
-interface Todo {
-  title: string
-  description: string
-  completed: boolean
-}
-
-type TodoPreview = MyPick<Todo, "title" | "completed">
-
-const todo: TodoPreview = {
-  title: "Clean room",
-  completed: false,
-}
-
-/* _____________ 테스트 케이스 _____________ */
+/* _____________ Test Cases _____________ */
 import type { Equal, Expect } from "@type-challenges/utils"
 
 type cases = [
@@ -75,9 +60,9 @@ interface Expected2 {
   completed: boolean
 }
 
-/* _____________ 다음 단계 _____________ */
+/* _____________ Further Steps _____________ */
 /*
-  > 정답 공유하기: https://tsch.js.org/4/answer/ko
-  > 정답 보기: https://tsch.js.org/4/solutions
-  > 다른 문제들: https://tsch.js.org/ko
+  > Share your solutions: https://tsch.js.org/4/answer
+  > View solutions: https://tsch.js.org/4/solutions
+  > More Challenges: https://tsch.js.org
 */
