@@ -18,14 +18,57 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Includes<T extends readonly any[], U> = any
+// https://github.com/microsoft/TypeScript/issues/27024
+
+// type Includes<T extends readonly unknown[], U> = U extends T[number]
+//   ? true
+//   : false
+
+// type Includes<T extends readonly unknown[], U> = T extends unknown[]
+//   ? U extends T[number]
+//     ? true
+//     : false
+//   : false
+
+// type Includes<T extends readonly any[], U> = {
+//   [P in T[number]]: true
+// }[U] extends true
+//   ? true
+//   : false
+
+// export type IsEqual<X, Y> = (<T>() => T extends X ? 1 : 2) extends <
+//   T,
+// >() => T extends Y ? 1 : 2
+//   ? true
+//   : false
+
+// type Includes<T extends readonly unknown[], U> = T extends [
+//   infer First,
+//   ...infer Rest,
+// ]
+//   ? Equal<First, U> extends true
+//     ? true
+//     : Includes<Rest, U>
+//   : false
+
+//
+
+export type _IsEqual<X, Y> = (<T>() => T extends X ? 1 : 2) extends <
+  T,
+>() => T extends Y ? 1 : 2
+  ? true
+  : false
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 
 type cases = [
-  Expect<Equal<Includes<['Kars', 'Esidisi', 'Wamuu', 'Santana'], 'Kars'>, true>>,
-  Expect<Equal<Includes<['Kars', 'Esidisi', 'Wamuu', 'Santana'], 'Dio'>, false>>,
+  Expect<
+    Equal<Includes<['Kars', 'Esidisi', 'Wamuu', 'Santana'], 'Kars'>, true>
+  >,
+  Expect<
+    Equal<Includes<['Kars', 'Esidisi', 'Wamuu', 'Santana'], 'Dio'>, false>
+  >,
   Expect<Equal<Includes<[1, 2, 3, 5, 6, 7], 7>, true>>,
   Expect<Equal<Includes<[1, 2, 3, 5, 6, 7], 4>, false>>,
   Expect<Equal<Includes<[1, 2, 3], 2>, true>>,
