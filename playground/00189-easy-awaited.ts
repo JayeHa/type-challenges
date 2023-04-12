@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/quotes */
+
+/* eslint-disable @typescript-eslint/comma-dangle */
 /*
   189 - Awaited
   -------
@@ -22,10 +25,17 @@
 
 /* _____________ Your Code Here _____________ */
 
-type MyAwaited<T> = any
+// wrong 💩
+// type MyAwaited<T> = T extends PromiseLike<infer P> ? MyAwaited<P> : T
+
+type MyAwaited<T extends PromiseLike<any>> = T extends PromiseLike<infer P>
+  ? P extends PromiseLike<any>
+    ? MyAwaited<P>
+    : P
+  : never
 
 /* _____________ Test Cases _____________ */
-import type { Equal, Expect } from '@type-challenges/utils'
+import type { Equal, Expect } from "@type-challenges/utils"
 
 type X = Promise<string>
 type Y = Promise<{ field: number }>
@@ -38,7 +48,7 @@ type cases = [
   Expect<Equal<MyAwaited<Y>, { field: number }>>,
   Expect<Equal<MyAwaited<Z>, string | number>>,
   Expect<Equal<MyAwaited<Z1>, string | boolean>>,
-  Expect<Equal<MyAwaited<T>, number>>,
+  Expect<Equal<MyAwaited<T>, number>>
 ]
 
 // @ts-expect-error
