@@ -20,28 +20,6 @@
 
 // https://github.com/microsoft/TypeScript/issues/27024
 
-// type Includes<T extends readonly unknown[], U> = U extends T[number]
-//   ? true
-//   : false
-
-// type Includes<T extends readonly unknown[], U> = T extends unknown[]
-//   ? U extends T[number]
-//     ? true
-//     : false
-//   : false
-
-// type Includes<T extends readonly any[], U> = {
-//   [P in T[number]]: true
-// }[U] extends true
-//   ? true
-//   : false
-
-// export type IsEqual<X, Y> = (<T>() => T extends X ? 1 : 2) extends <
-//   T,
-// >() => T extends Y ? 1 : 2
-//   ? true
-//   : false
-
 type Includes<T extends readonly unknown[], U> = T extends [
   infer First,
   ...infer Rest,
