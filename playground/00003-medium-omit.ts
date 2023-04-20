@@ -30,7 +30,20 @@
 
 /* _____________ Your Code Here _____________ */
 
-type MyOmit<T, K> = any
+// 내 해결책(실패)
+// type MyOmit<T, K extends keyof T> = {
+//   [P in keyof T]: P extends K ? never : T[P]
+// }
+
+// Exclude를 사용한 해결
+// type MyExclude<A, B> = A extends B ? never : A
+// type MyOmit<T, K extends keyof T> = { [S in MyExclude<keyof T, K>]: T[S] }
+
+// as keyword를 사용한 해결
+// https:// www.typescriptlang.org/docs/handbook/2/mapped-types.html#key-remapping-via-as
+type MyOmit<T, K extends keyof T> = {
+  [P in keyof T as P extends K ? never : P]: T[P]
+}
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -39,6 +52,8 @@ type cases = [
   Expect<Equal<Expected1, MyOmit<Todo, 'description'>>>,
   Expect<Equal<Expected2, MyOmit<Todo, 'description' | 'completed'>>>,
 ]
+
+type test = MyOmit<Todo, 'description'>
 
 // @ts-expect-error
 type error = MyOmit<Todo, 'description' | 'invalid'>
