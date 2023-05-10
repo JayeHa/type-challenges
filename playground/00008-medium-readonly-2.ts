@@ -35,9 +35,9 @@
 /* _____________ Your Code Here _____________ */
 
 type MyReadonly2<T, K extends keyof T = keyof T> = {
-  [p in keyof T as p extends K ? never : p]: T[p]
+  [P in keyof T as P extends K ? never : P]: T[P]
 } & {
-  readonly [p in K]: T[p]
+  readonly [P in K]: T[P]
 }
 
 /* _____________ Test Cases _____________ */
